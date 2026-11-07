@@ -1,0 +1,106 @@
+/**
+ * SessionUI — the wearer's only controls, kept deliberately tiny (the "phone
+ * test" cut everything else): Mute/Unmute and End. After a few seconds without
+ * interaction it collapses to a small pill; pinch the pill to open it again.
+ */
+import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
+import {Button} from "SpectaclesUIKit.lspkg/Scripts/Components/Button/Button"
+import {Panel, addButton, addColumnText, addRow, buildPanel} from "./UiKitHelpers"
+
+@component
+export class SessionUI extends BaseScriptComponent {
+  @input
+  @hint("Title shown on the panel.")
+  title: string = "MyLoco AR · Meet Me There"
+
+  @input
+  @hint("Seconds without interaction before the panel collapses to a pill (0 = never).")
+  collapseAfterS: number = 8
+
+  @input("vec4", "{1.0,1.0,1.0,1.0}")
+  @widget(new ColorWidget())
+  @hint("Title colour.")
+  titleColor: vec4
+
+  @input("vec4", "{1.0,0.62,0.50,1.0}")
+  @widget(new ColorWidget())
+  @hint("Status colour.")
+  statusColor: vec4
+
+  private _onMuteChanged = new Event<boolean>()
+  private _onEnd = new Event<void>()
+  get onMuteChanged(): PublicApi<boolean> {
+    return this._onMuteChanged.publicApi()
+  }
+  get onEnd(): PublicApi<void> {
+    return this._onEnd.publicApi()
+  }
+
+  private panelSO: SceneObject
+  private pillSO: SceneObject
+  private status: Text
+  private muteLabel: Text
+  private muted = false
+  private idle = 0
+  private expanded = true
+
+  onAwake(): void {
+    const root = this.getSceneObject()
+    this.panelSO = global.scene.createSceneObject("SessionPanel")
+    this.panelSO.setParent(root)
+    const p: Panel = buildPanel(this.panelSO, 24, 1.4, 0.8)
+    addColumnText(p.content, this.title, "Subheadline", this.titleColor, 2.0)
+    this.status = addColumnText(p.content, "Connecting…", "Caption", this.statusColor, 1.8).text
+    const row = addRow(p.content, "Buttons", 1.2, 3.4)
+    this.muteLabel = addButton(row.so, "Mute", 9, 3.0, () => this.toggleMute()).label
+    addButton(row.so, "End", 9, 3.0, () => {
+      this.touch()
+      this._onEnd.invoke()
+    })
+
+    this.pillSO = global.scene.createSceneObject("SessionPill")
+    this.pillSO.setParent(root)
+    this.pillSO.createComponent("Component.Canvas")
+    const pillRow = addRow(this.pillSO, "PillRow", 0, 3.2)
+    addButton(pillRow.so, "MyLoco", 10, 2.8, () => this.expand())
+    this.pillSO.enabled = false
+
+    this.createEvent("UpdateEvent").bind(() => {
+      if (!this.expanded || this.collapseAfterS <= 0) return
+      this.idle += getDeltaTime()
+      if (this.idle > this.collapseAfterS) this.collapse()
+    })
+  }
+
+  setStatus(text: string): void {
+    if (this.status) this.status.text = text
+  }
+
+  get isMuted(): boolean {
+    return this.muted
+  }
+
+  toggleMute(): void {
+    this.touch()
+    this.muted = !this.muted
+    this.muteLabel.text = this.muted ? "Unmute" : "Mute"
+    this._onMuteChanged.invoke(this.muted)
+  }
+
+  expand(): void {
+    this.expanded = true
+    this.idle = 0
+    this.panelSO.enabled = true
+    this.pillSO.enabled = false
+  }
+
+  collapse(): void {
+    this.expanded = false
+    this.panelSO.enabled = false
+    this.pillSO.enabled = true
+  }
+
+  private touch(): void {
+    this.idle = 0
+  }
+}
