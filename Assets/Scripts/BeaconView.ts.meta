@@ -1,0 +1,74 @@
+- !<AssetImportMetadata/ae08bb43-df43-4696-bc8c-9172e13bf6e1>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 761e7b21-2c2b-446b-a2b7-c3c636726ffd
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 761e7b21-2c2b-446b-a2b7-c3c636726ffd
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3c41d845-bd9d-49fd-ac6b-6a9a35a6fc3d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3c41d845-bd9d-49fd-ac6b-6a9a35a6fc3d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 921a372e-bf11-40de-b62d-8dfeba56cd8d
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    arrowThresholdDeg: false
+    baseMaterial: false
+    beaconColor: false
+    camera: false
+    farAngularHeightDeg: false
+    farRenderDistanceM: false
+    markerHeightCm: false
+    markerMinAngleDeg: false
+    staleColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      baseMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      beaconColor: !<Vec3> {x: 1.000000, y: 0.420000, z: 0.300000}
+      staleColor: !<Vec3> {x: 0.700000, y: 0.620000, z: 0.600000}
+      farRenderDistanceM: !<float> 40.000000
+      farAngularHeightDeg: !<float> 12.000000
+      markerHeightCm: !<float> 180.000000
+      markerMinAngleDeg: 2.500000
+      arrowThresholdDeg: !<float> 15.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #FF7A59;\">BeaconView – pillar, marker, rings, off-view arrow</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @input SceneObject camera {"hint":"The SPECS camera object."}'
+    - '// @input Asset.Material baseMaterial {"hint":"Unlit material to clone for every beacon visual (color is set per clone)."}'
+    - '// @input vec3 beaconColor = "{1.0,0.42,0.30}" {"hint":"Beacon colour (MyLoco coral). Bright colours read best on the additive display.", "widget":"color"}'
+    - "// @input vec3 staleColor = \"{0.70,0.62,0.60}\" {\"hint\":\"Colour used when the friend's location is stale.\", \"widget\":\"color\"}"
+    - '// @ui {"widget":"group_start", "label":"Sizing"}'
+    - '// @input float farRenderDistanceM = 40 {"hint":"Far band: the pillar is drawn at most this far away (m) and scaled to keep its angular size."}'
+    - '// @input float farAngularHeightDeg = 12 {"hint":"Far band: how far above the horizon the pillar top reaches (degrees)."}'
+    - '// @input float markerHeightCm = 180 {"hint":"Near band: real-world marker height (cm)."}'
+    - '// @input float markerMinAngleDeg = 2.5 {"hint":"Near band: minimum angular height of the marker (degrees) so it stays findable at 70 m."}'
+    - '// @input float arrowThresholdDeg = 15 {"hint":"Off-view arrow appears when the friend is more than this many degrees off-centre."}'
+    - '// @ui {"widget":"group_end"}'

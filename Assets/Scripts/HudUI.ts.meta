@@ -1,0 +1,49 @@
+- !<AssetImportMetadata/4f049ef5-dd6b-49ec-8e7b-5892ea4cef85>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 509a116a-3f6d-4e3c-baaf-3c4b1d3a587b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 509a116a-3f6d-4e3c-baaf-3c4b1d3a587b
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 1a99bdc5-840b-44ad-8c8c-f45e6892815f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/1a99bdc5-840b-44ad-8c8c-f45e6892815f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 74331ab5-76e8-43c3-b7c7-5e29a57c1dba
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    detailColor: false
+    headColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - headColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      detailColor: !<Vec4> {x: 1.000000, y: 0.620000, z: 0.500000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input vec4 headColor = "{1.0,1.0,1.0,1.0}" {"hint":"Headline colour.", "widget":"color"}'
+    - '// @input vec4 detailColor = "{1.0,0.62,0.50,1.0}" {"hint":"Detail colour.", "widget":"color"}'

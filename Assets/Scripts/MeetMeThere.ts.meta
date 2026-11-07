@@ -1,0 +1,74 @@
+- !<AssetImportMetadata/4ca8e1de-e164-4a35-903d-34f164cbca4b>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 1e2931ed-e8ed-410a-a5eb-eab750721a34
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 1e2931ed-e8ed-410a-a5eb-eab750721a34
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> b8565517-c06c-4e9b-b1d5-c484b3b0bd7f
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/b8565517-c06c-4e9b-b1d5-c484b3b0bd7f>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 653ff3c9-529a-47c6-81c5-d9f9d1eac722
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    beacon: false
+    chime: false
+    feed: false
+    hud: false
+    label: false
+    metricUnits: false
+    previewControls: false
+    session: false
+    wearerPose: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - wearerPose: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      feed: !<MappingBased.AssignableType_2> 00000000-0000-0000-0000-000000000000
+      beacon: !<MappingBased.AssignableType_3> 00000000-0000-0000-0000-000000000000
+      label: !<MappingBased.AssignableType_4> 00000000-0000-0000-0000-000000000000
+      hud: !<MappingBased.AssignableType_5> 00000000-0000-0000-0000-000000000000
+      session: !<MappingBased.AssignableType_6> 00000000-0000-0000-0000-000000000000
+      previewControls: !<MappingBased.AssignableType_7> 00000000-0000-0000-0000-000000000000
+      chime: !<reference.AudioComponent> 00000000-0000-0000-0000-000000000000
+      metricUnits: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #FF7A59;\">MeetMeThere – MyLoco AR main controller</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 wearerPose {"hint":"Wearer position/heading (preview camera or real GPS)."}'
+    - "// @input AssignableType_2 feed {\"hint\":\"The friend's MyLoco share (simulated or live).\"}"
+    - '// @input AssignableType_3 beacon {"hint":"World visuals: pillar, marker, rings, arrow."}'
+    - '// @input AssignableType_4 label {"hint":"Name/distance chip that floats with the beacon."}'
+    - '// @input AssignableType_5 hud {"hint":"One-line guidance card."}'
+    - '// @input AssignableType_6 session {"hint":"Wearer controls (Mute, End)."}'
+    - '// @input AssignableType_7 previewControls {"hint":"Editor-only stand-in controls."}'
+    - '// @input Component.AudioComponent chime {"hint":"Soft chime for band changes and share end."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @input bool metricUnits {"hint":"Show metres instead of feet."}'

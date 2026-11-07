@@ -1,0 +1,55 @@
+- !<AssetImportMetadata/337b6151-ba9c-42c3-a575-881962d30166>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 749f4340-3c20-4a08-950b-022be0f0880b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 749f4340-3c20-4a08-950b-022be0f0880b
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> f12cf30f-c6e1-4668-aebf-864e2e3c3654
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/f12cf30f-c6e1-4668-aebf-864e2e3c3654>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: b9216c41-8483-47db-b85f-58bb4b0b3ca1
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    collapseAfterS: false
+    statusColor: false
+    title: false
+    titleColor: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - title: MyLoco AR · Meet Me There
+      collapseAfterS: !<float> 8.000000
+      titleColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      statusColor: !<Vec4> {x: 1.000000, y: 0.620000, z: 0.500000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input string title = "MyLoco AR · Meet Me There" {"hint":"Title shown on the panel."}'
+    - '// @input float collapseAfterS = 8 {"hint":"Seconds without interaction before the panel collapses to a pill (0 = never)."}'
+    - '// @input vec4 titleColor = "{1.0,1.0,1.0,1.0}" {"hint":"Title colour.", "widget":"color"}'
+    - '// @input vec4 statusColor = "{1.0,0.62,0.50,1.0}" {"hint":"Status colour.", "widget":"color"}'
