@@ -30,6 +30,8 @@ export function applyTextRole(t: Text, role: TextRole, distanceCm: number = 110)
 }
 
 export const CONTENT_Z = 0.6
+/** Wearer-control panels sit at arm's length (LazyFollow z = -75 cm); their text is sized for that distance. */
+export const NEAR_PANEL_CM = 75
 const BUTTON_LABEL_Z = 0.08
 
 export interface Panel {
@@ -64,13 +66,13 @@ export function buildPanel(root: SceneObject, widthCm: number, pad: number, gap:
 }
 
 /** A full-width text line in a column (Stretch trick from patterns.md). */
-export function addColumnText(parent: SceneObject, text: string, role: TextRole, color: vec4, heightCm: number): {text: Text; item: FlexItem} {
+export function addColumnText(parent: SceneObject, text: string, role: TextRole, color: vec4, heightCm: number, distanceCm: number = 110): {text: Text; item: FlexItem} {
   const so = global.scene.createSceneObject("Text")
   so.setParent(parent)
   const t = so.createComponent("Component.Text") as Text
   t.text = text
   t.depthTest = true
-  applyTextRole(t, role)
+  applyTextRole(t, role, distanceCm)
   t.textFill.color = color
   t.horizontalAlignment = HorizontalAlignment.Center
   t.verticalAlignment = VerticalAlignment.Center
@@ -97,7 +99,7 @@ export function addRow(parent: SceneObject, name: string, gap: number, heightCm:
 }
 
 /** Width-budgeted UIKit Button with a raw Text label (patterns.md → Button with text). */
-export function addButton(parent: SceneObject, label: string, sizeX: number, sizeY: number, onClick: () => void): {button: Button; label: Text; item: FlexItem} {
+export function addButton(parent: SceneObject, label: string, sizeX: number, sizeY: number, onClick: () => void, distanceCm: number = 110): {button: Button; label: Text; item: FlexItem} {
   const so = global.scene.createSceneObject("Button_" + label.replace(/[^A-Za-z]/g, ""))
   so.setParent(parent)
   const btn = so.createComponent(Button.getTypeName()) as Button
@@ -108,7 +110,7 @@ export function addButton(parent: SceneObject, label: string, sizeX: number, siz
   const t = lso.createComponent("Component.Text") as Text
   t.text = label
   t.depthTest = true
-  applyTextRole(t, "Button")
+  applyTextRole(t, "Button", distanceCm)
   t.horizontalAlignment = HorizontalAlignment.Center
   t.verticalAlignment = VerticalAlignment.Center
   t.horizontalOverflow = HorizontalOverflow.Overflow

@@ -4,7 +4,7 @@
  * interaction it collapses to a small pill; pinch the pill to open it again.
  */
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
-import {Panel, addButton, addColumnText, addRow, buildPanel, deferredVisibility} from "./UiKitHelpers"
+import {NEAR_PANEL_CM, Panel, addButton, addColumnText, addRow, buildPanel, deferredVisibility} from "./UiKitHelpers"
 
 @component
 export class SessionUI extends BaseScriptComponent {
@@ -48,21 +48,27 @@ export class SessionUI extends BaseScriptComponent {
     const root = this.getSceneObject()
     this.panelSO = global.scene.createSceneObject("SessionPanel")
     this.panelSO.setParent(root)
-    const p: Panel = buildPanel(this.panelSO, 24, 1.4, 0.8)
-    addColumnText(p.content, this.title, "Subheadline", this.titleColor, 2.0)
-    this.status = addColumnText(p.content, "Connecting…", "Caption", this.statusColor, 1.8).text
-    const row = addRow(p.content, "Buttons", 1.2, 3.4)
-    this.muteLabel = addButton(row.so, "Mute", 9, 3.0, () => this.toggleMute()).label
-    addButton(row.so, "End", 9, 3.0, () => {
+    // Arm's-length panel: text sized for 75 cm, buttons >= 4 cm tall (brief: big pinch targets).
+    const D = NEAR_PANEL_CM
+    const p: Panel = buildPanel(this.panelSO, 19, 1.0, 0.6)
+    addColumnText(p.content, this.title, "Subheadline", this.titleColor, 1.5, D)
+    this.status = addColumnText(p.content, "Connecting…", "Caption", this.statusColor, 1.4, D).text
+    const row = addRow(p.content, "Buttons", 1.0, 4.6)
+    const mute = addButton(row.so, "Mute", 8.2, 4.4, () => this.toggleMute(), D)
+    this.muteLabel = mute.label
+    const end = addButton(row.so, "End", 8.2, 4.4, () => {
       this.touch()
       this._onEnd.invoke()
-    })
+    }, D)
+    // Aiming at the panel counts as using it: don't fold it away while the wearer is reaching for a button.
+    mute.button.onHoverEnter.add(() => this.touch())
+    end.button.onHoverEnter.add(() => this.touch())
 
     this.pillSO = global.scene.createSceneObject("SessionPill")
     this.pillSO.setParent(root)
     this.pillSO.createComponent("Component.Canvas")
-    const pillRow = addRow(this.pillSO, "PillRow", 0, 3.2)
-    addButton(pillRow.so, "MyLoco", 10, 2.8, () => this.expand())
+    const pillRow = addRow(this.pillSO, "PillRow", 0, 4.4)
+    addButton(pillRow.so, "MyLoco", 9, 4.2, () => this.expand(), D)
     // The pill starts hidden, but only after its UIKit button has initialised (see deferredVisibility).
     this.setPillShown = deferredVisibility(pillRow.flex, this.pillSO, false)
 

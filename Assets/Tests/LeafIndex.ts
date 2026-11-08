@@ -1,6 +1,7 @@
 /**
  * LEAF scenario registry for MyLoco AR. One scenario per done criterion in
- * devpost/design-brief.md (criterion 5 is split into End share and Mute).
+ * devpost/design-brief.md (criterion 5 is split into End share and Mute), plus
+ * an IK reachability check for the wearer controls.
  */
 import {scenariosIndex} from "Leaf.lspkg/Scenarios/decorator/ScenarioIndexDecorator"
 import {ScenarioMetadata} from "Leaf.lspkg/Scenarios/scenario/ScenarioMetadata"
@@ -10,6 +11,7 @@ import {DC3OffViewArrowScenario} from "./DC3OffViewArrowScenario"
 import {DC4SignalLostScenario} from "./DC4SignalLostScenario"
 import {DC5EndShareScenario} from "./DC5EndShareScenario"
 import {DC5MuteScenario} from "./DC5MuteScenario"
+import {IKReachControlsScenario} from "./IKReachControlsScenario"
 
 @component
 export class LeafIndex extends BaseScriptComponent {
@@ -21,5 +23,6 @@ export class LeafIndex extends BaseScriptComponent {
     {id: "dc4-signal-lost-restore", typename: DC4SignalLostScenario.getTypeName()},
     {id: "dc5a-end-share", typename: DC5EndShareScenario.getTypeName()},
     {id: "dc5b-mute-toggles-chime", typename: DC5MuteScenario.getTypeName()},
+    {id: "ik-reach-wearer-controls", typename: IKReachControlsScenario.getTypeName()},
   ]
 }

@@ -21,7 +21,7 @@ export class DC4SignalLostScenario extends Scenario {
 
     // A fix older than 20 s is stale: hollow + dim + "last seen N s ago".
     expect(await waitFor(() => lens.controller().state === "live-far-stale", 26000, 250)).toBe(true)
-    expect(await waitFor(() => lens.beacon().freshWeight < 0.6, 2000)).toBe(true)
+    expect(await waitFor(() => lens.beacon().freshWeight < 0.7, 2000)).toBe(true)
     expect(lens.beacon().coreVisible).toBe(false)
     const status1 = lens.label().statusLine
     const n1 = lastSeenSeconds(status1)

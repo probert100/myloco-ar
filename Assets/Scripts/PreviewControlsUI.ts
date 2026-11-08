@@ -7,7 +7,7 @@
  *   Restart                – replay the demo from the top
  */
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
-import {Panel, addButton, addColumnText, addRow, buildPanel} from "./UiKitHelpers"
+import {NEAR_PANEL_CM, Panel, addButton, addColumnText, addRow, buildPanel} from "./UiKitHelpers"
 
 @component
 export class PreviewControlsUI extends BaseScriptComponent {
@@ -37,21 +37,23 @@ export class PreviewControlsUI extends BaseScriptComponent {
       this.getSceneObject().enabled = false
       return
     }
-    const p: Panel = buildPanel(this.getSceneObject(), 22, 1.2, 0.7)
-    addColumnText(p.content, "PREVIEW CONTROLS", "Caption", this.headerColor, 1.6)
-    const r1 = addRow(p.content, "Row1", 1.0, 3.2)
-    this.signalLabel = addButton(r1.so, "Signal lost", 10, 2.8, () => {
+    // Arm's-length panel: text sized for 75 cm, buttons >= 4 cm tall.
+    const D = NEAR_PANEL_CM
+    const p: Panel = buildPanel(this.getSceneObject(), 19.5, 1.0, 0.6)
+    addColumnText(p.content, "PREVIEW CONTROLS", "Caption", this.headerColor, 1.3, D)
+    const r1 = addRow(p.content, "Row1", 0.8, 4.4)
+    this.signalLabel = addButton(r1.so, "Signal lost", 8.6, 4.1, () => {
       this.lost = !this.lost
       this.signalLabel.text = this.lost ? "Restore" : "Signal lost"
       this._onSignal.invoke(this.lost)
-    }).label
-    addButton(r1.so, "Skip closer", 10, 2.8, () => this._onSkip.invoke())
-    const r2 = addRow(p.content, "Row2", 1.0, 3.2)
-    addButton(r2.so, "End share", 10, 2.8, () => this._onEndShare.invoke())
-    addButton(r2.so, "Restart", 10, 2.8, () => {
+    }, D).label
+    addButton(r1.so, "Skip closer", 8.6, 4.1, () => this._onSkip.invoke(), D)
+    const r2 = addRow(p.content, "Row2", 0.8, 4.4)
+    addButton(r2.so, "End share", 8.6, 4.1, () => this._onEndShare.invoke(), D)
+    addButton(r2.so, "Restart", 8.6, 4.1, () => {
       this.lost = false
       this.signalLabel.text = "Signal lost"
       this._onRestart.invoke()
-    })
+    }, D)
   }
 }

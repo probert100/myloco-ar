@@ -173,7 +173,7 @@ export class BeaconView extends BaseScriptComponent {
     this.farA += ((f.band === "far" ? on : 0) - this.farA) * k
     this.nearA += ((f.band === "near" ? on : 0) - this.nearA) * k
     this.hereA += ((f.band === "here" ? on : 0) - this.hereA) * k
-    const freshTarget = f.freshness === "live" ? 1 : f.freshness === "stale" ? 0.45 : 0.2
+    const freshTarget = f.freshness === "live" ? 1 : f.freshness === "stale" ? 0.6 : 0.25
     this.fresh += (freshTarget - this.fresh) * k
     const color = f.freshness === "live" ? this.beaconColor : this.staleColor
     const live = f.freshness === "live" ? 1 : 0
@@ -217,8 +217,9 @@ export class BeaconView extends BaseScriptComponent {
       this.labelAnchor = new vec3(foot.x, cam.y - 0.15 * R * Math.tan(8 * DEG), foot.z)
       this.labelScale = R / 110
     } else {
-      this.labelAnchor = new vec3(mFoot.x, f.groundY + mH * 1.15, mFoot.z)
+      // Sit the chip just above the marker's head: ~3.6 cm is half the chip's height before scaling.
       this.labelScale = Math.max(1, D / 110)
+      this.labelAnchor = new vec3(mFoot.x, f.groundY + mH * 1.05 + 3.6 * this.labelScale, mFoot.z)
     }
 
     // ── Off-view arrow ──
