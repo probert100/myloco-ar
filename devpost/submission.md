@@ -2,8 +2,9 @@
 
 ## Short description (paste into Devpost)
 
-**MyLoco AR — Meet Me There** finds one friend in a crowd. It puts a coral light pillar over the friend's real location, in
-your view, on SPECS.
+**MyLoco AR — Meet Me There** solves the last 600 feet of a meet-up. Your friend shares a self-expiring MyLoco link (no
+app or account needed on your side). On SPECS, a coral light pillar stands over the crowd where they are, and you keep
+your eyes up and your hands free. It never lies: the ring grows with GPS error, and old data looks old.
 
 **What it does.** Your friend taps *Share my location* in the MyLoco phone app (live on iOS and Android) and texts you the
 link. On SPECS, a pillar of light stands over the crowd in their direction, with their name, distance and freshness ("Maya ·
@@ -14,6 +15,10 @@ sharing, it fades out and says so.
 
 **Who it's for.** Anyone meeting someone in a busy place: festivals, stadium gates, arrivals halls, graduation fields. Only
 the seeker needs glasses. The friend needs no SPECS, no Snapchat and no account, and the share expires on its own.
+
+**How it differs.** Google Maps' Live View in Location Sharing shows a friend in AR on a phone you hold up in the
+crowd. Snap Map shows Snapchat friends on a 2D map. MyLoco AR is eyes-up and hands-free on SPECS, works for a friend with
+no Snap or Google account, and shows its uncertainty instead of a falsely precise pin.
 
 **How it's built.** The Lens was planned with the Devpost Learn `plan-lens` skill (`devpost/design-brief.md`) and built by a
 coding agent through Snap's CLAD plugin skills and the Lens Studio MCP: VirtualScene scene bootstrap, TypeScript compile and
@@ -54,16 +59,18 @@ scripted (`devpost/video/pipeline/`). Details are in `devpost/build-log.md` unde
 
 Suggested YouTube title: **MyLoco AR — Meet Me There (SPECS Lens, Learn AR with SPECS)**. Suggested description: the
 short description above, plus "Voice-over and music generated with ElevenLabs. Footage: Lens Studio 5.24 preview,
-SPECS 27. Repo: <link>".
+SPECS 27. Repo: https://github.com/probert100/myloco-ar". (Used as-is, with chapters.)
 
 ## Submission checklist
-- [ ] Repo public on GitHub: this `MyLocoAR/` folder is the repo root (Lens Studio project + `devpost/`)
+- [x] Repo public on GitHub: https://github.com/probert100/myloco-ar (this `MyLocoAR/` folder is the repo root)
 - [x] Video made: `devpost/video/MyLocoAR-Meet-Me-There.mp4`, 2:15 (under 3:00), thumbnail `devpost/video/thumbnail.png`
-- [ ] YouTube video uploaded and public (Robert)
-- [ ] Description pasted (above), with the repo + video links
-- [ ] Disclosure: pre-existing code is limited to Snap packages (Spectacles Interaction Kit, Spectacles UI Kit, LEAF,
-      AI Preview Agent). The Lens scripts were written by AI coding agents (a cloud Claude session drafted them, Claude Code
-      with CLAD + the Lens Studio MCP fixed, built and tested them; see `devpost/build-log.md`). The optional real-share
+- [x] YouTube video public: https://youtu.be/mGn3sGOS5Nk (channel Robert Misior)
+- [x] Devpost project filled in (story, tags, gallery, repo + video links, additional info): https://devpost.com/software/myloco-ar-meet-me-there
+- [x] Disclosure: pre-existing code is limited to Snap packages (Spectacles Interaction Kit, Spectacles UI Kit, LEAF,
+      AI Preview Agent). All Lens code is new, written during the submission period by AI coding agents: an initial script
+      draft came from a cloud Claude session without Lens Studio access, and every script was then integrated, fixed,
+      built and tested by Claude Code with CLAD through the Lens Studio MCP (7/7 LEAF tests; see `devpost/build-log.md`).
+      MyLoco itself is my pre-existing product; the Lens contains none of its code. The optional real-share
       mode calls MyLoco's existing public `get_share` API (my own product). The video's voice-over and music are
       AI-generated (ElevenLabs); the footage is the Lens running in the Lens Studio preview.
-- [ ] Submitted before **Nov 9, 2026, 5:00 PM EST**
+- [x] Submitted on Nov 8, 2026, before the **Nov 9, 2026, 5:00 PM EST** deadline (editable until then)

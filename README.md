@@ -4,14 +4,27 @@ A Lens for **SPECS** that helps you find one friend in a crowd. Your friend shar
 [MyLoco](https://myloco.app) phone app. On SPECS, a coral light pillar stands over the crowd exactly where they are. It
 turns into a person-height marker as you get close, then into a ring around you when you're within GPS range.
 
-> Entry for Devpost's **Learn AR with SPECS** (Nov 2026). Planning docs are in [`devpost/`](devpost/).
+> Entry for Devpost's **Learn AR with SPECS** (Nov 2026): [Devpost project](https://devpost.com/software/myloco-ar-meet-me-there) ·
+> [demo video](https://youtu.be/mGn3sGOS5Nk). Planning docs are in [`devpost/`](devpost/).
+>
+> **Demo video (2:15):** https://youtu.be/mGn3sGOS5Nk
+
+**Evidence at a glance.** Every done criterion in the [design brief](devpost/design-brief.md) has a LEAF scenario, and all
+7 scenarios pass in the Lens Studio preview: beacon at start, walking through the bands, the off-view arrow, signal lost
+and restore, share ended, mute, and an IK reachability check on the controls. Tests, bugs found and the full CLAD/MCP
+toolchain are in [`devpost/build-log.md`](devpost/build-log.md).
+
+**How it differs from what exists.** Google Maps' Live View in Location Sharing shows a friend in AR on a phone held up
+at arm's length, and Snap Map shows Snapchat friends on a map. MyLoco AR keeps your eyes up and hands free on SPECS, works
+for a friend who has no Snap or Google account (just a self-expiring MyLoco link), and draws an honest uncertainty ring
+instead of a falsely precise pin.
 
 ## What it does
 - **Far (beyond 75 m / ~250 ft):** a tall pillar on the friend's bearing. It's drawn at most 40 m away and keeps its angular
   size, so it reads at 600 ft. A chip shows their name, distance and freshness ("Maya · 590 ft · live").
 - **Near:** a person-height marker at their smoothed position, inside a ground ring whose radius is the **combined GPS
   uncertainty** of both phones.
-- **Here (within max(50 ft, combined accuracy)):** the marker hides and a ring appears around you: "Maya is within ~45 ft.
+- **Here (within max(50 ft, combined accuracy)):** the marker hides and a ring appears around you: "Maya is within ~50 ft.
   Look around."
 - **Off-view arrow** when they're outside the ~32° view. A **chime** plays on band changes (on by default, with a Mute
   button).
@@ -25,7 +38,7 @@ turns into a person-height marker as you get close, then into a ring around you 
 | `WearerPose` | Position + heading from the preview camera (WASD = walking; world −Z = north; origin = Dorothea Dix Park, Raleigh) | `LocationService` (Navigation accuracy) + north-aligned heading, filtered on the circle |
 | `FriendFeed` | Scripted friend walking a path with realistic GPS noise, one fix every 2 s | Polls MyLoco `get_share` for a real share token (set `anonKey` + `shareToken` in the Inspector) |
 | `PreviewControlsUI` | Yellow panel: Signal lost / Restore, Skip closer, End share, Restart | Hidden |
-| `PreviewSet` | Tents, stage and 320 crowd silhouettes (labelled PREVIEW SET) | Hidden |
+| `PreviewSet` | Tents, stage and ~900 crowd silhouettes (labelled PREVIEW SET) | Hidden |
 
 ## Project layout
 This folder is the Lens Studio project (open `MyLocoAR.esproj`).
@@ -77,7 +90,7 @@ ask a coding agent with CLAD to run them through the Lens Studio MCP. All 7 pass
 timed to the voice-over), and it still fails if a state it shows doesn't happen.
 
 ## Video
-[`devpost/video/`](devpost/video/): the 2:15 submission video (the mp4 is not in git; it's on YouTube), its thumbnail,
+[`devpost/video/`](devpost/video/): the 2:15 submission video (the mp4 is not in git; it's on [YouTube](https://youtu.be/mGn3sGOS5Nk)), its thumbnail,
 and the scripted pipeline that made it from a Lens Studio preview recording of `video-tour`, ElevenLabs voice and music,
 and ffmpeg. See [`devpost/build-log.md`](devpost/build-log.md) → "The submission video".
 

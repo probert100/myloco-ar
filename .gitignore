@@ -43,3 +43,6 @@ devpost/video/pipeline/gfx/
 devpost/video/pipeline/work/
 devpost/video/pipeline/music/
 __pycache__/
+
+# Devpost gallery frames (copies of video frames)
+devpost/video/gallery/

@@ -1,10 +1,9 @@
 @AGENTS.md
 
-> **Status (Nov 8, 2026): build and video done.** The Lens runs in the preview and all 7 LEAF scenarios pass. What was
-> done, by which CLAD skills and MCP tools, is in `devpost/build-log.md`. `lens-src/` was imported into `Assets/` and
-> removed (the cloud session's original draft is in commit `1535833`). The 2:15 video is
-> `devpost/video/MyLocoAR-Meet-Me-There.mp4` (not in git). Remaining: Robert creates the GitHub repo, uploads the video
-> to YouTube and submits (`devpost/submission.md`).
+> **Status (Nov 8, 2026): submitted.** The Lens runs in the preview and all 7 LEAF scenarios pass (`devpost/build-log.md`).
+> Repo: https://github.com/probert100/myloco-ar · Video: https://youtu.be/mGn3sGOS5Nk · Devpost:
+> https://devpost.com/software/myloco-ar-meet-me-there (editable until Nov 9, 2026, 5:00 PM EST). The cloud session's
+> original draft is in commit `1535833`.
 
 # HANDOFF — MyLoco AR "Meet Me There" (Learn AR with SPECS)
 
