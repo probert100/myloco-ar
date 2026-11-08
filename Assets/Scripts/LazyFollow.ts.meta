@@ -28,7 +28,10 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    camera: false
+    followRate: false
+    offset: false
+    yawDeadZoneDeg: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,10 +41,15 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      offset: !<Vec3> {x: -22.000000, y: -28.000000, z: -75.000000}
+      followRate: 2.500000
+      yawDeadZoneDeg: !<float> 25.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input SceneObject camera {"hint":"The SPECS camera object."}'
+    - '// @input vec3 offset = {-22,-28,-75} {"hint":"Offset from the camera in its yaw frame (cm): x right, y up, z forward (negative = ahead)."}'
+    - '// @input float followRate = 2.5 {"hint":"How quickly the panel catches up (1/s)."}'
+    - '// @input float yawDeadZoneDeg = 25 {"hint":"Re-centre only when the panel drifts more than this many degrees from where it belongs."}'

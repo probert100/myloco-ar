@@ -4,7 +4,6 @@
  * interaction it collapses to a small pill; pinch the pill to open it again.
  */
 import Event, {PublicApi} from "SpectaclesInteractionKit.lspkg/Utils/Event"
-import {Button} from "SpectaclesUIKit.lspkg/Scripts/Components/Button/Button"
 import {Panel, addButton, addColumnText, addRow, buildPanel, deferredVisibility} from "./UiKitHelpers"
 
 @component

@@ -24,11 +24,12 @@
   VersionPatch: 0
   VersionPrerelease: ""
   UpdateOrder: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: f7308ed6-6973-4032-994e-6a52890b9342
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    headerColor: false
+    showOnDevice: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,10 +39,11 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - showOnDevice: false
+      headerColor: !<Vec4> {x: 1.000000, y: 0.850000, z: 0.350000, w: 1.000000}
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input bool showOnDevice {"hint":"Show these controls on SPECS hardware too (normally editor-only)."}'
+    - "// @input vec4 headerColor = \"{1.0,0.85,0.35,1.0}\" {\"hint\":\"Header colour (yellow = 'this is a preview stand-in').\", \"widget\":\"color\"}"

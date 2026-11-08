@@ -54,6 +54,10 @@ export class FriendTracker {
   private vel: Enu = {east: 0, north: 0}
   private band: Band | null = null
   private fix: GeoFix | null = null
+  /** Filtered estimate of the friend's position at the last fix (ENU m from ref). */
+  private est: Enu | null = null
+  /** Velocity estimated from successive filtered fixes (m/s), used when the phone reports none. */
+  private estVel: Enu = {east: 0, north: 0}
 
   constructor(cfg: TrackerConfig = DEFAULT_TRACKER_CONFIG) {
     this.cfg = cfg
@@ -64,16 +68,47 @@ export class FriendTracker {
     this.band = null
     this.fix = null
     this.vel = {east: 0, north: 0}
+    this.est = null
+    this.estVel = {east: 0, north: 0}
   }
 
-  /** Call when a new fix arrives. */
+  /**
+   * Call when a new fix arrives. Each fix is blended with a prediction from the
+   * previous estimate (alpha filter): a phone fix in a crowd is often 5-10 m
+   * off, so averaging across fixes keeps the distance honest without lagging a
+   * walker, because the prediction already carries her reported speed and
+   * heading. A jump far outside the accuracy (a real jump, or a "Skip closer")
+   * is taken as-is.
+   */
   onFix(fix: GeoFix): void {
+    const prev = this.fix
     this.fix = fix
     if (this.ref === null) {
       this.ref = {lat: fix.lat, lng: fix.lng}
       this.pos = {east: 0, north: 0}
       this.vel = {east: 0, north: 0}
     }
+    const meas = enuOffset(this.ref.lat, this.ref.lng, fix.lat, fix.lng)
+    if (this.est === null || prev === null) {
+      this.est = meas
+      return
+    }
+    const dtFix = Math.max(0.1, (fix.timestampMs - prev.timestampMs) / 1000)
+    // Phone says how it's moving (a stop reads as speed 0): trust that. Otherwise use our own estimate.
+    const v = fix.speedMps !== null ? reportedVelocity(fix) || {east: 0, north: 0} : this.estVel
+    const pred: Enu = {east: this.est.east + v.east * dtFix, north: this.est.north + v.north * dtFix}
+    const rE = meas.east - pred.east
+    const rN = meas.north - pred.north
+    const jump = Math.sqrt(rE * rE + rN * rN) > Math.max(25, 3 * fix.accuracyM)
+    const alpha = jump ? 1 : clamp(8 / (8 + fix.accuracyM), 0.2, 0.8)
+    const next: Enu = {east: pred.east + alpha * rE, north: pred.north + alpha * rN}
+    if (!jump) {
+      this.estVel = {
+        east: 0.7 * this.estVel.east + 0.3 * ((next.east - this.est.east) / dtFix),
+        north: 0.7 * this.estVel.north + 0.3 * ((next.north - this.est.north) / dtFix),
+      }
+    }
+    this.est = next
   }
 
   /** Smoothed friend position relative to the wearer, plus band/freshness. */
@@ -88,13 +123,14 @@ export class FriendTracker {
     const ageS = Math.max(0, (nowMs - fix.timestampMs) / 1000)
     const freshness: Freshness = ageS > this.cfg.oldAfterS ? "old" : ageS > this.cfg.staleAfterS ? "stale" : "live"
 
-    // Target = last fix, pushed forward along its reported motion while fresh.
-    const target = enuOffset(this.ref.lat, this.ref.lng, fix.lat, fix.lng)
-    if (freshness === "live" && fix.speedMps !== null && fix.headingDeg !== null && fix.speedMps > 0.3) {
+    // Target = filtered fix, pushed forward along her motion while fresh (dead reckoning).
+    const base = this.est !== null ? this.est : enuOffset(this.ref.lat, this.ref.lng, fix.lat, fix.lng)
+    const target: Enu = {east: base.east, north: base.north}
+    const v = reportedVelocity(fix)
+    if (freshness === "live" && v !== null) {
       const t = Math.min(ageS, this.cfg.maxDeadReckonS)
-      const h = (fix.headingDeg * Math.PI) / 180
-      target.east += Math.sin(h) * fix.speedMps * t
-      target.north += Math.cos(h) * fix.speedMps * t
+      target.east += v.east * t
+      target.north += v.north * t
     }
 
     // Critically damped spring toward the target (no overshoot, no jumps).
@@ -140,4 +176,15 @@ export class FriendTracker {
     }
     return prev
   }
+}
+
+/** The phone's own speed + heading as an ENU velocity (m/s), or null if it isn't moving / didn't say. */
+function reportedVelocity(fix: GeoFix): Enu | null {
+  if (fix.speedMps === null || fix.headingDeg === null || fix.speedMps <= 0.3) return null
+  const h = (fix.headingDeg * Math.PI) / 180
+  return {east: Math.sin(h) * fix.speedMps, north: Math.cos(h) * fix.speedMps}
+}
+
+function clamp(x: number, lo: number, hi: number): number {
+  return Math.min(hi, Math.max(lo, x))
 }

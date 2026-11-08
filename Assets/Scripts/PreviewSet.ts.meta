@@ -24,11 +24,16 @@
   VersionPatch: 0
   VersionPrerelease: ""
   UpdateOrder: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: a9d4166c-233f-4726-bf13-44fc7a232dc2
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    baseMaterial: false
+    crowdColor: false
+    crowdCount: false
+    groundY: false
+    showOnDevice: false
+    tentColor: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,10 +43,19 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - baseMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      showOnDevice: false
+      crowdCount: !<float> 320.000000
+      groundY: !<float> -160.000000
+      crowdColor: !<Vec4> {x: 0.550000, y: 0.620000, z: 0.750000, w: 0.550000}
+      tentColor: !<Vec4> {x: 0.350000, y: 0.750000, z: 0.700000, w: 0.600000}
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @input Asset.Material baseMaterial {"hint":"Unlit material to clone for the set."}'
+    - '// @input bool showOnDevice {"hint":"Build the set on SPECS hardware too (normally editor-only)."}'
+    - '// @input float crowdCount = 900 {"hint":"Number of crowd silhouettes."}'
+    - '// @input float groundY = -160 {"hint":"Ground height relative to the preview camera start (cm)."}'
+    - '// @input vec4 crowdColor = "{0.55,0.62,0.75,0.8}" {"hint":"Crowd colour.", "widget":"color"}'
+    - '// @input vec4 tentColor = "{0.35,0.70,0.68,0.42}" {"hint":"Tent/stage colour.", "widget":"color"}'

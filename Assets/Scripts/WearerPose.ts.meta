@@ -28,7 +28,12 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    camera: false
+    eyeHeightCm: false
+    mode: false
+    originLat: false
+    originLng: false
+    previewAccuracyM: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -38,10 +43,23 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      mode: !<float> 0.000000
+      originLat: 35.771400
+      originLng: -78.661903
+      previewAccuracyM: !<float> 6.000000
+      eyeHeightCm: !<float> 160.000000
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #FF7A59;\">WearerPose – preview camera vs. real GPS/compass</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @input SceneObject camera {"hint":"The SPECS camera (the object with Camera + DeviceTracking)."}'
+    - '// @input float mode {"hint":"Auto = preview camera in Lens Studio, real GPS on SPECS. Force a mode for testing.", "widget":"combobox", "values":[{"label":"Auto", "value":0}, {"label":"Preview camera", "value":1}, {"label":"Device GPS", "value":2}]}'
+    - '// @ui {"widget":"group_start", "label":"Preview origin"}'
+    - '// @input float originLat = 35.7714 {"hint":"Latitude the preview world origin maps to (default: Dorothea Dix Park, Raleigh NC)."}'
+    - '// @input float originLng = -78.6619 {"hint":"Longitude the preview world origin maps to."}'
+    - '// @input float previewAccuracyM = 6 {"hint":"Simulated wearer GPS accuracy in preview (metres, 1-sigma)."}'
+    - '// @ui {"widget":"group_end"}'
+    - '// @input float eyeHeightCm = 160 {"hint":"Eye height above the ground (cm). Used to place things on the floor."}'

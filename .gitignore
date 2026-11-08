@@ -31,3 +31,6 @@ ls-live-instance.json.tmp
 .virtual-scene.json
 .mcp-bridge/
 node_modules/
+
+# Added by Lens Studio (LEAF plugin)
+leaf_plugin_settings.json

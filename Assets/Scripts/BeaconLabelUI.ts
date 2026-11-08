@@ -32,7 +32,7 @@ export class BeaconLabelUI extends BaseScriptComponent {
   onAwake(): void {
     this.panel = buildPanel(this.getSceneObject(), 16, 0.9, 0.3)
     this.nameText = addColumnText(this.panel.content, "", "Headline2", this.nameColor, 2.2).text
-    this.statusText = addColumnText(this.panel.content, "", "Body", this.liveColor, 1.8).text
+    this.statusText = addColumnText(this.panel.content, "", "Subheadline", this.liveColor, 2.0).text
     this.tr = this.getTransform()
   }
 

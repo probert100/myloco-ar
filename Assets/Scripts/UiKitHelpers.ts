@@ -26,7 +26,7 @@ export function roleSize(role: TextRole, distanceCm: number = 110): number {
 }
 export function applyTextRole(t: Text, role: TextRole, distanceCm: number = 110): void {
   t.size = roleSize(role, distanceCm)
-  ;(t as Text & {weight?: number}).weight = TYPE_SCALE[role].weight
+  t.weight = TYPE_SCALE[role].weight
 }
 
 export const CONTENT_Z = 0.6

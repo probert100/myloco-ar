@@ -112,6 +112,32 @@ export class MeshAccumulator {
     for (let i = 0; i < 4; i++) this.tri(ids[i], ids[(i + 1) % 4], top)
   }
 
+  /** Axis-aligned box centred at (cx,cy,cz) with half-extents (hx,hy,hz); flat-shaded faces. */
+  box(cx: number, cy: number, cz: number, hx: number, hy: number, hz: number): void {
+    const faces: {n: V3; u: V3; v: V3}[] = [
+      {n: [1, 0, 0], u: [0, 0, -1], v: [0, 1, 0]},
+      {n: [-1, 0, 0], u: [0, 0, 1], v: [0, 1, 0]},
+      {n: [0, 1, 0], u: [1, 0, 0], v: [0, 0, -1]},
+      {n: [0, -1, 0], u: [1, 0, 0], v: [0, 0, 1]},
+      {n: [0, 0, 1], u: [1, 0, 0], v: [0, 1, 0]},
+      {n: [0, 0, -1], u: [-1, 0, 0], v: [0, 1, 0]},
+    ]
+    const h: V3 = [hx, hy, hz]
+    for (const f of faces) {
+      const c: V3 = [cx + f.n[0] * h[0], cy + f.n[1] * h[1], cz + f.n[2] * h[2]]
+      const corner = (su: number, sv: number): V3 => [
+        c[0] + (f.u[0] * h[0] * su) + (f.v[0] * h[0] * sv),
+        c[1] + (f.u[1] * h[1] * su) + (f.v[1] * h[1] * sv),
+        c[2] + (f.u[2] * h[2] * su) + (f.v[2] * h[2] * sv),
+      ]
+      const a = this.vertex(corner(-1, -1), f.n, 0, 0)
+      const b = this.vertex(corner(1, -1), f.n, 1, 0)
+      const d = this.vertex(corner(1, 1), f.n, 1, 1)
+      const e = this.vertex(corner(-1, 1), f.n, 0, 1)
+      this.quad(a, b, d, e)
+    }
+  }
+
   /** Flat chevron "▲" pointing +Y, in the XY plane, unit height. */
   chevron(): void {
     const n: V3 = [0, 0, 1]

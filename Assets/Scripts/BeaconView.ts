@@ -149,6 +149,8 @@ export class BeaconView extends BaseScriptComponent {
     const rmv = so.createComponent("Component.RenderMeshVisual") as RenderMeshVisual
     rmv.mesh = mesh
     const mat = this.baseMaterial.clone()
+    // Fades go through baseColor alpha, so the clone must alpha-blend (the Unlit preset ships with blending Disabled).
+    mat.mainPass.blendMode = BlendMode.Normal
     mat.mainPass.twoSided = true
     mat.mainPass.depthWrite = false
     rmv.mainMaterial = mat
