@@ -28,12 +28,14 @@ turns into a person-height marker as you get close, then into a ring around you 
 | `PreviewSet` | Tents, stage and 320 crowd silhouettes (labelled PREVIEW SET) | Hidden |
 
 ## Project layout
+This folder is the Lens Studio project (open `MyLocoAR.esproj`).
 ```
-MyLocoAR/                    Lens Studio project (open MyLocoAR.esproj)
-  Assets/Scripts/            Lens TypeScript (sources mirrored in lens-src/)
-devpost/                     plan-lens design brief, design notes, build log, submission kit
-lens-src/                    canonical copies of the Lens scripts + chime.wav
-tools/mcp-relay.mjs          build tooling: file relay to the Lens Studio MCP (not part of the Lens)
+Assets/Scripts/              Lens TypeScript (14 modules, table below)
+Assets/Tests/                LEAF scenarios: one per done criterion + an IK reachability check
+Assets/Materials/            BeaconUnlit.mat (Unlit, alpha-blended; cloned per visual at runtime)
+Assets/Audio/chime.wav       Band-change / share-ended chime (generated, original)
+Packages/                    SpectaclesInteractionKit, SpectaclesUIKit, Leaf (v2.0.2), AI Preview Agent (dev tooling)
+devpost/                     plan-lens design brief, design notes, build log, screenshots, submission kit
 ```
 
 | Script | Role |
@@ -41,19 +43,43 @@ tools/mcp-relay.mjs          build tooling: file relay to the Lens Studio MCP (n
 | `MeetMeThere.ts` | Main controller: pose + feed → tracker → visuals and UI |
 | `WearerPose.ts` | Preview camera ↔ real GPS/compass seam |
 | `FriendFeed.ts` | Simulated friend ↔ live MyLoco share seam |
-| `FriendTracker.ts` | Smoothing (critically damped spring + dead reckoning), bands with hysteresis, freshness, combined accuracy |
+| `FriendTracker.ts` | Alpha filter across noisy fixes, smoothing with dead reckoning, bands with hysteresis, freshness, combined accuracy |
 | `GeoMath.ts` | ENU/bearing math, formatting |
 | `BeaconView.ts` | Pillar, marker, rings, off-view arrow (procedural meshes) |
 | `Meshes.ts` | MeshBuilder primitives |
 | `BeaconLabelUI.ts`, `HudUI.ts`, `SessionUI.ts`, `PreviewControlsUI.ts` | SpectaclesUIKit UI modules |
+| `UiKitHelpers.ts` | Shared UIKit panel / text / button helpers (CLAD `specs-build-ui` patterns) |
 | `LazyFollow.ts` | Keeps panels reachable while walking (yaw-only, dead zone) |
 | `PreviewSet.ts` | Preview-only festival set dressing |
 
 ## Run it in the preview
-1. Open `MyLocoAR/MyLocoAR.esproj` in Lens Studio 5.24+.
-2. In the Preview panel choose the SPECS device and **Interactive** input.
-3. WASD to walk, right-drag to look, click = pinch. Use the yellow **PREVIEW CONTROLS** to simulate signal loss, skip
-   closer, or end the share.
+1. Open `MyLocoAR.esproj` in Lens Studio 5.24+ (no sign-in needed).
+2. Preview panel: **SPECS 27** device, **Interactive** input, the **Plane** scene (open ground for walking).
+3. WASD to walk, right-drag to look, click = pinch. Glance down for the wearer panel (Mute / End) and the yellow
+   **PREVIEW CONTROLS** (Signal lost / Restore, Skip closer, End share, Restart).
+
+## Tests (LEAF)
+Open the LEAF panel in Lens Studio and run the scenarios in `Assets/Tests/` (registered by the `LeafIndex` object), or
+ask a coding agent with CLAD to run them through the Lens Studio MCP. All 7 pass; results are in
+[`devpost/build-log.md`](devpost/build-log.md).
+
+| Scenario | Checks |
+|---|---|
+| `dc1-beacon-at-start` | Beacon + chip "Maya · 600 ft · live" at start, distance updates as she walks |
+| `dc2-walk-closer-bands` | Walking / Skip closer: Far → Near (marker + uncertainty ring) → Here ("Maya is within ~X ft. Look around.") |
+| `dc3-off-view-arrow` | Turning away shows the edge arrow on her side; turning back hides it |
+| `dc4-signal-lost-restore` | Signal lost → hollow + "last seen N s ago" counting; Restore → live |
+| `dc5a-end-share` | End share → fade + "Maya stopped sharing" |
+| `dc5b-mute-toggles-chime` | Mute swallows the chime, Unmute brings it back |
+| `ik-reach-wearer-controls` | A simulated arm + head can reach every wearer control (0 LEAF diagnostics) |
+
+## Known limits
+- The device path (GPS + compass via `LocationService`) is written against the SPECS Location API but can only be
+  proven on real SPECS outdoors. The preview uses the camera as the wearer.
+- The optional live MyLoco share mode needs an anon key (left empty in the repo). On device, internet + location in one
+  Lens requires Snap's Extended Permissions.
+- The AI Preview Agent package and the `AiPreviewAgent Handler` object are developer tooling for agent-driven preview
+  checks; they don't affect the Lens.
 
 ## Built with
 Lens Studio 5.24.1 · Spectacles Interaction Kit · Spectacles UI Kit · CLAD (ls-clad) skills · Lens Studio MCP ·

@@ -47,13 +47,16 @@ doesn't ship on device.
 | 2:10 | Cut to Lens Studio + agent terminal / build-log | "I planned it with the plan-lens skill and built it with CLAD through the Lens Studio MCP: scene bootstrap, compile and log loops, preview captures and LEAF tests for each done criterion." |
 | 2:25 | Back to beacon | "MyLoco AR. Meet me there." |
 
-Recording tips: Preview panel in **Interactive** mode, SPECS device; start recording, then press **Restart** on the preview
-controls so the first frame is the beacon. Keep the mouse on a pinch target before clicking. No music with copyrighted material.
+Recording tips: Preview panel in **Interactive** mode, **SPECS 27** device, **Plane** scene; start recording, then press
+**Restart** on the preview controls so the first frame is the beacon. The panels sit below eye level: glance down
+(right-drag) to pinch them, then look back up. Use the screenshots in `devpost/screenshots/` as a shot list. Keep the mouse on a pinch target before clicking. No music with copyrighted material.
 
 ## Submission checklist
-- [ ] Repo public on GitHub with the Lens Studio project folder (`MyLocoAR/`) and `devpost/`
+- [ ] Repo public on GitHub: this `MyLocoAR/` folder is the repo root (Lens Studio project + `devpost/`)
 - [ ] YouTube video public, under 3:00
 - [ ] Description pasted (above), with the repo + video links
-- [ ] Disclosure: no pre-existing code in the Lens. It calls MyLoco's existing public `get_share` API (my own product)
-      in optional real-share mode. The `tools/mcp-relay.mjs` helper is build tooling, not part of the Lens.
+- [ ] Disclosure: pre-existing code is limited to Snap packages (Spectacles Interaction Kit, Spectacles UI Kit, LEAF,
+      AI Preview Agent). The Lens scripts were written by AI coding agents (a cloud Claude session drafted them, Claude Code
+      with CLAD + the Lens Studio MCP fixed, built and tested them; see `devpost/build-log.md`). The optional real-share
+      mode calls MyLoco's existing public `get_share` API (my own product).
 - [ ] Submitted before **Nov 9, 2026, 5:00 PM EST**

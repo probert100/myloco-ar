@@ -1,5 +1,10 @@
 @AGENTS.md
 
+> **Status (Nov 7, 2026): build done.** The Lens runs in the preview and all 7 LEAF scenarios pass. What was done, by
+> which CLAD skills and MCP tools, is in `devpost/build-log.md`. `lens-src/` was imported into `Assets/` and removed (the
+> cloud session's original draft is in commit `1535833`). Remaining: Robert creates the GitHub repo, records the video
+> (`devpost/submission.md`) and submits.
+
 # HANDOFF — MyLoco AR "Meet Me There" (Learn AR with SPECS)
 
 You are Claude Code running **on Robert's Mac** with the **CLAD plugin (`ls-clad`)** and the **Lens Studio MCP**. This file
