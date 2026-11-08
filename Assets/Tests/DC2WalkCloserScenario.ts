@@ -7,7 +7,7 @@
 import {Scenario} from "Leaf.lspkg/Scenarios/scenario/Scenario"
 import {expect} from "Leaf.lspkg/Utils/common/Expect"
 import {sleep} from "Leaf.lspkg/Utils/common/Utils"
-import {MyLocoLeafInteractor, WearerRig, feetIn, lens, waitFor} from "./MyLocoLeaf"
+import {MyLocoLeafInteractor, WearerRig, feetIn, hudAngleDeg, lens, waitFor} from "./MyLocoLeaf"
 
 @component
 export class DC2WalkCloserScenario extends Scenario {
@@ -54,5 +54,13 @@ export class DC2WalkCloserScenario extends Scenario {
     const head = lens.hud().headline
     print("[DC2] here band, HUD: " + head)
     expect(/^Maya is within ~\d+ ft\. Look around\.$/.test(head)).toBe(true)
+
+    // The message has to be in view, not just set: turn 20° (as someone looking around
+    // would) and the HUD must follow into the ~±17° view.
+    await rig.turnTo(20, 600)
+    await sleep(2000)
+    const off = hudAngleDeg()
+    print("[DC2] HUD " + off.toFixed(1) + "° from the view centre after a 20° turn")
+    expect(10).toBeGreaterThan(off)
   }
 }

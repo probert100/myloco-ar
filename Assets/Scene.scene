@@ -1954,16 +1954,15 @@
   Enabled: true
   ScriptAsset: !<reference> 3bd2c966-ee52-48f5-ae09-61d9e731e0bf
   ScriptInputsDefault:
-    followRate: true
-    yawDeadZoneDeg: true
+    {}
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       offset: !<Vec3> {x: 0.000000, y: -18.000000, z: -110.000000}
-      followRate: 2.500000
-      yawDeadZoneDeg: !<float> 25.000000
+      followRate: !<float> 4.000000
+      yawDeadZoneDeg: !<float> 6.000000
   ScriptTypes:
     "":
       {}

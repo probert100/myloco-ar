@@ -214,8 +214,11 @@ export class BeaconView extends BaseScriptComponent {
 
     // Label anchor follows whichever visual is dominant.
     if (f.band === "far") {
-      this.labelAnchor = new vec3(foot.x, cam.y - 0.15 * R * Math.tan(8 * DEG), foot.z)
-      this.labelScale = R / 110
+      // Stand the chip just in front of the pillar (toward the wearer), not on its axis:
+      // on the axis the pillar's near face covered the chip text.
+      const chipD = Math.max(100, R - pillarR * 2.2 - 30)
+      this.labelAnchor = new vec3(cam.x + f.dirX * chipD, cam.y - 0.15 * R * Math.tan(8 * DEG), cam.z + f.dirZ * chipD)
+      this.labelScale = chipD / 110
     } else {
       // Sit the chip just above the marker's head: ~3.6 cm is half the chip's height before scaling.
       this.labelScale = Math.max(1, D / 110)

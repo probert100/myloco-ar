@@ -116,6 +116,21 @@ export class WearerRig {
   }
 }
 
+/**
+ * Horizontal angle (deg) between where the wearer looks and the HUD panel. A SPECS
+ * eye sees about ±17°, so a HUD message only counts as shown if this is small.
+ */
+export function hudAngleDeg(): number {
+  const cam = findSceneObjectByName("Camera Object").getTransform()
+  const hud = findSceneObjectByName("Hud").getTransform().getWorldPosition()
+  const f = cam.back
+  const d = hud.sub(cam.getWorldPosition())
+  let deg = ((Math.atan2(d.x, -d.z) - Math.atan2(f.x, -f.z)) * 180) / Math.PI
+  while (deg > 180) deg -= 360
+  while (deg < -180) deg += 360
+  return Math.abs(deg)
+}
+
 /** Make sure the wearer's session panel is open (it collapses to a pill after a few idle seconds). */
 export async function openSessionPanel(ix: MyLocoLeafInteractor): Promise<void> {
   if (!lens.session().isExpanded) {

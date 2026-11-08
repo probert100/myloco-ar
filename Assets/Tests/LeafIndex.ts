@@ -12,6 +12,7 @@ import {DC4SignalLostScenario} from "./DC4SignalLostScenario"
 import {DC5EndShareScenario} from "./DC5EndShareScenario"
 import {DC5MuteScenario} from "./DC5MuteScenario"
 import {IKReachControlsScenario} from "./IKReachControlsScenario"
+import {VideoTourScenario} from "./VideoTourScenario"
 
 @component
 export class LeafIndex extends BaseScriptComponent {
@@ -24,5 +25,7 @@ export class LeafIndex extends BaseScriptComponent {
     {id: "dc5a-end-share", typename: DC5EndShareScenario.getTypeName()},
     {id: "dc5b-mute-toggles-chime", typename: DC5MuteScenario.getTypeName()},
     {id: "ik-reach-wearer-controls", typename: IKReachControlsScenario.getTypeName()},
+    // Camera moves and pinches for the submission video (devpost/submission.md); not a done criterion.
+    {id: "video-tour", typename: VideoTourScenario.getTypeName()},
   ]
 }

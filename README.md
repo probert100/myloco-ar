@@ -31,11 +31,11 @@ turns into a person-height marker as you get close, then into a ring around you 
 This folder is the Lens Studio project (open `MyLocoAR.esproj`).
 ```
 Assets/Scripts/              Lens TypeScript (14 modules, table below)
-Assets/Tests/                LEAF scenarios: one per done criterion + an IK reachability check
+Assets/Tests/                LEAF scenarios: one per done criterion + an IK reachability check + the video tour
 Assets/Materials/            BeaconUnlit.mat (Unlit, alpha-blended; cloned per visual at runtime)
 Assets/Audio/chime.wav       Band-change / share-ended chime (generated, original)
 Packages/                    SpectaclesInteractionKit, SpectaclesUIKit, Leaf (v2.0.2), AI Preview Agent (dev tooling)
-devpost/                     plan-lens design brief, design notes, build log, screenshots, submission kit
+devpost/                     plan-lens design brief, design notes, build log, screenshots, submission kit, video
 ```
 
 | Script | Role |
@@ -66,12 +66,20 @@ ask a coding agent with CLAD to run them through the Lens Studio MCP. All 7 pass
 | Scenario | Checks |
 |---|---|
 | `dc1-beacon-at-start` | Beacon + chip "Maya · 600 ft · live" at start, distance updates as she walks |
-| `dc2-walk-closer-bands` | Walking / Skip closer: Far → Near (marker + uncertainty ring) → Here ("Maya is within ~X ft. Look around.") |
+| `dc2-walk-closer-bands` | Walking / Skip closer: Far → Near (marker + uncertainty ring) → Here ("Maya is within ~X ft. Look around."), and the HUD stays in view after a turn |
 | `dc3-off-view-arrow` | Turning away shows the edge arrow on her side; turning back hides it |
 | `dc4-signal-lost-restore` | Signal lost → hollow + "last seen N s ago" counting; Restore → live |
-| `dc5a-end-share` | End share → fade + "Maya stopped sharing" |
+| `dc5a-end-share` | End share → fade + "Maya stopped sharing", in view after a turn |
 | `dc5b-mute-toggles-chime` | Mute swallows the chime, Unmute brings it back |
 | `ik-reach-wearer-controls` | A simulated arm + head can reach every wearer control (0 LEAF diagnostics) |
+
+`video-tour` is not a test of a done criterion: it is the submission video's shot list (camera moves and pinches,
+timed to the voice-over), and it still fails if a state it shows doesn't happen.
+
+## Video
+[`devpost/video/`](devpost/video/): the 2:15 submission video (the mp4 is not in git; it's on YouTube), its thumbnail,
+and the scripted pipeline that made it from a Lens Studio preview recording of `video-tour`, ElevenLabs voice and music,
+and ffmpeg. See [`devpost/build-log.md`](devpost/build-log.md) → "The submission video".
 
 ## Known limits
 - The device path (GPS + compass via `LocationService`) is written against the SPECS Location API but can only be

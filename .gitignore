@@ -34,3 +34,12 @@ node_modules/
 
 # Added by Lens Studio (LEAF plugin)
 leaf_plugin_settings.json
+
+# Submission video: the mp4 goes to YouTube; generated media and local Python deps stay out of git
+devpost/video/*.mp4
+devpost/video/py/
+devpost/video/pipeline/vo/
+devpost/video/pipeline/gfx/
+devpost/video/pipeline/work/
+devpost/video/pipeline/music/
+__pycache__/

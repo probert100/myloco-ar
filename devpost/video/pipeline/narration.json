@@ -1,0 +1,46 @@
+[
+ {
+  "id": "s01_intro",
+  "text": "This is my friend Maya. She's about six hundred feet away, somewhere in a festival crowd. She shared her location from the MyLoco app, and on SPECS, she's a pillar of light, standing right where she is."
+ },
+ {
+  "id": "s02_anyone",
+  "text": "Only I need glasses. Maya just has the MyLoco phone app. No Snapchat, no account, and her link expires on its own. That's the difference from Snap Map: it works with anyone, and the answer is out in the world, not on a map."
+ },
+ {
+  "id": "s03_arrow",
+  "text": "If I turn away, a small arrow at the edge of my view points back to her. Nothing else clutters the view."
+ },
+ {
+  "id": "s04_walk",
+  "text": "As I walk, the distance and freshness update every couple of seconds. On SPECS, my position comes from the glasses' own location and compass. The Lens Studio preview can't move GPS, so this yellow panel is a stand-in. I'll skip closer."
+ },
+ {
+  "id": "s05_near",
+  "text": "Closer in, the pillar becomes a person-sized marker, inside a ring. The ring is honest about GPS: both our phones' errors add up, so I look inside the circle instead of trusting a pin."
+ },
+ {
+  "id": "s06_stale",
+  "text": "If her phone stops reporting, it never pretends old data is live. The marker goes hollow, and the label counts how old her last location is. When the signal comes back, it's live again."
+ },
+ {
+  "id": "s07_here",
+  "text": "Once I'm inside that uncertainty, it stops pretending to be precise. It just tells me Maya is close, and to look around. Eyes up, phone in my pocket."
+ },
+ {
+  "id": "s08_controls",
+  "text": "On my side, there are only two controls: Mute, and End. I cut everything a phone does better."
+ },
+ {
+  "id": "s09_ended",
+  "text": "And when Maya stops sharing, the beacon fades out, and tells me so."
+ },
+ {
+  "id": "s10_built",
+  "text": "I planned this with the plan-lens skill, and built it with Snap's CLAD skills through the Lens Studio MCP: scene bootstrap, compile and log loops, preview captures, and a LEAF test for every done criterion. All seven pass. Even the camera moves in this video are a scripted LEAF scenario."
+ },
+ {
+  "id": "s11_outro",
+  "text": "MyLoco AR. Meet me there."
+ }
+]

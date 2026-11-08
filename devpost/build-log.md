@@ -1,7 +1,7 @@
 # Build log: MyLoco AR — Meet Me There
 
 How the Lens went from the approved `plan-lens` brief to a working SPECS Lens. The build used CLAD skills and the Lens
-Studio MCP, driven by Claude Code (Opus 5.5) on Robert's Mac. Lens Studio 5.24.1, SPECS 27 preview, Nov 7, 2026.
+Studio MCP, driven by Claude Code (Opus 5.5) on Robert's Mac. Lens Studio 5.24.1, SPECS 27 preview, Nov 7–8, 2026.
 
 ## Result
 
@@ -12,10 +12,10 @@ reachability test.
 | # | Done criterion | LEAF scenario | Result | What the run printed |
 |---|---|---|---|---|
 | 1 | Coral beacon ~600 ft away, chip "Maya · 600 ft · live", updates as she walks | `dc1-beacon-at-start` | ✅ pass | chip `Maya · 600 ft · live`, then `600 → 590 → 580 ft` over 10 s |
-| 2 | Walking / Skip closer lowers distance; <75 m → marker + uncertainty ring; Here → ring + "Maya is within ~X ft. Look around." | `dc2-walk-closer-bands` | ✅ pass | walked 15 m: `600 → 530 ft`; `band=near` at 63 m; `band=here` at 12.6 m; HUD `Maya is within ~50 ft. Look around.` |
+| 2 | Walking / Skip closer lowers distance; <75 m → marker + uncertainty ring; Here → ring + "Maya is within ~X ft. Look around." | `dc2-walk-closer-bands` | ✅ pass | walked 15 m: `600 → 530 ft`; `band=near` at 63 m; `band=here` at 12.6 m; HUD `Maya is within ~50 ft. Look around.`, and after a 20° turn the HUD is 5.7° from the view centre (in view) |
 | 3 | Turning away shows the edge arrow; turning back hides it | `dc3-off-view-arrow` | ✅ pass | facing east: arrow weight 1.00, 11 cm left of centre; facing north: 0.00 |
 | 4 | Signal lost → dim/hollow + "last seen N s ago" counting; Restore → live | `dc4-signal-lost-restore` | ✅ pass | `last seen 20 s ago` → `23 s ago` 3 s later; core hidden; back to `live` after Restore |
-| 5a | End share → beacon fades + "Maya stopped sharing" | `dc5a-end-share` | ✅ pass | HUD `Maya stopped sharing`, chime played, beacon weight → 0 |
+| 5a | End share → beacon fades + "Maya stopped sharing" | `dc5a-end-share` | ✅ pass | HUD `Maya stopped sharing`, chime played, beacon weight → 0; HUD 5.5° from centre after a 20° turn |
 | 5b | Mute toggles the chime | `dc5b-mute-toggles-chime` | ✅ pass | `chime (muted)` on the Far→Near change; after Unmute the next cue plays |
 | — | Every control is within reach (brief: comfort check) | `ik-reach-wearer-controls` | ✅ pass | LEAF IK arm + head reached Mute, Skip closer and the pill: **0 diagnostics** |
 
@@ -90,6 +90,10 @@ steps: creating the project (Home → SPECS → Base Template → Save As) and a
 7. **LEAF.** Six scenarios were written and run; one failed for a real reason (below), the Lens was fixed, and all six
    passed. A seventh, IK reachability, failed twice: the session panel folded away under the reaching hand. The Lens was
    fixed and it passed. The full suite was re-run after the last change.
+8. **Submission video (Nov 8).** Reviewing the recorded footage frame by frame found two more Lens bugs that the
+   LEAF assertions couldn't see, because they checked text, not pixels (table below). Both were fixed, DC2 and DC5a gained a
+   "HUD is actually in view" assertion (shown failing on the old setting first), and the full suite was re-run: all 7
+   pass. How the video was made is described under "The submission video".
 
 ## Bugs found and how
 
@@ -105,6 +109,8 @@ steps: creating the project (Home → SPECS → Base Template → Save As) and a
 | Lower panels sat at ±18°, outside the SPECS 27 per-eye view (about ±17°) | Preview capture | Panels at ±10.5 cm, 75 cm ahead, 27 cm below eye level (glance down) |
 | Preview set (this session's own design issue): a stage straight ahead hid the chip, and 320 people over 200 m didn't read as a crowd | Preview captures | ~900 people along the walk, stage off-axis, set drawn first with no depth writes (on SPECS nothing virtual is hidden by real people) |
 | Near-band chip overlapped the marker's head; stale beacon too faint to find | Preview captures | Anchor above the head; stale brightness 0.45 → 0.6 |
+| Far-band chip sat on the pillar's axis, so the pillar's near face drew over the chip text ("M▮a", "590▮live"). Screenshot 01 from the first build shows it; `dc1` passed because it checks the chip's text, not its pixels. | Frame-by-frame review of the video footage | Chip stands just in front of the pillar, toward the wearer (`BeaconView`); screenshot 01 retaken |
+| HUD trailed the head with a 25° yaw dead zone, but a SPECS eye sees about ±17°: after a turn, "Maya is within ~50 ft. Look around." and "Maya stopped sharing" could sit outside the view indefinitely | Video review (the messages never appeared in the shots); then reproduced in LEAF: `dc2` with a 20° turn measured the HUD **20.0°** off-centre and failed | HUD `LazyFollow`: dead zone 6°, follow rate 4 (scene change). `dc2`/`dc5a` now assert the HUD is within 10° of the view centre after a 20° turn: 5.7° / 5.5°. The wrist-level panels keep 25° (you glance down to find them). |
 
 Other environment issues found along the way: Lens Studio's Agents-Docs plugin deletes `.agents/`, which the skill
 pack's `.claude/skills/plan-lens` symlinked to, so the skill was restored as a real copy. `/usr/local/bin/git` on this
@@ -114,13 +120,41 @@ Mac is an Intel binary, so `/usr/bin/git` was used.
 
 | File | State |
 |---|---|
-| `screenshots/01-start-beacon-600ft.png` | Start: pillar over the crowd, chip "Maya · 600 ft · live" |
+| `screenshots/01-start-beacon-600ft.png` | Start: pillar over the crowd, chip "Maya · 590 ft · live" in front of it (retaken after the chip fix) |
 | `screenshots/02-near-marker-uncertainty-ring.png` | Near band: person marker, chip above her, uncertainty ring on the ground |
 | `screenshots/03-here-ring-look-around.png` | Here band: ring around the wearer, "Maya is within ~50 ft. Look around." |
 | `screenshots/04-off-view-arrow.png` | Turned 90° away: chevron at the left edge pointing back to her |
 | `screenshots/05-signal-lost-stale.png` | Signal lost: hollow grey beacon, "last seen 29 s ago · 590 ft" |
 | `screenshots/06-share-ended.png` | End share: beacon gone, "Maya stopped sharing" |
 | `screenshots/07-wearer-controls-glance-down.png` | Glancing down: Mute / End panel and the yellow PREVIEW CONTROLS |
+
+## The submission video
+
+`devpost/video/MyLocoAR-Meet-Me-There.mp4` (2:15, 1080p30; not in git, upload it to YouTube) and `thumbnail.png`.
+Every Lens shot is a real Lens Studio preview recording (SPECS 27, one eye); nothing in the Lens view is drawn in post.
+
+- **Camera moves and pinches: a LEAF scenario.** `Assets/Tests/VideoTourScenario.ts` (`video-tour`) is the shot list
+  as code: it re-parents the camera under a rig, looks, walks and glances at the panels, pinches the buttons with LEAF's
+  interactor, and checks each state it shows (near, stale, here, ended) so a bad take fails. Action times come from the
+  voice-over's word timings, so a pinch lands on the word that describes it. It passed on every recorded take.
+- **Recording.** Lens Studio's own preview recorder (Record Video). Two traps: starting a scenario resets the preview,
+  which discards a running recording (so the tour holds 80 s, then presses Restart), and the recorder stamps every frame
+  at 30 fps whatever the render rate (a take made while the screen was locked rendered ~9 fps and played 2.8× fast). The
+  tour therefore draws a 16-bit timecode at the top edge of the view; the edit reads it from every frame, resamples to
+  real time and crops the strip off. Six takes: 1 was too slow, 2 was discarded by a screenshot mid-recording, 3 had a
+  band flicker caused by the tour (two Skip closer pinches left Maya ~20 m away, where GPS noise dips into Here; the tour
+  now pinches once and walks in), 4 showed the HUD bug, 5 glanced down at fixed angles and missed the trailing panels
+  (the tour now looks at each panel's real position), 6 is the final.
+- **Voice-over:** ElevenLabs `eleven_v4` text-to-speech (premade voice "Chris"), with word timestamps; every line was
+  transcribed back with ElevenLabs speech-to-text (`scribe_v1`) to check pronunciation of MyLoco, SPECS, CLAD and LEAF.
+- **Music:** ElevenLabs **video-to-music** scored the finished picture edit (instrumental, no SFX); speech-to-text
+  found no words in it. It is ducked 13.5 LU under the voice. Final mix −14.8 LUFS, true peak −1.1 dBFS. (A prompt-based
+  `music_v2_5` track was also generated and not used.)
+- **Chime:** the Lens's own `chime.wav`, placed at the three times the log shows it playing (the preview recorder
+  doesn't capture Lens audio).
+- **Edit:** Python + ffmpeg, scripts in `devpost/video/pipeline/`. Zoom boxes ("In the lens, zoomed") follow the white
+  UI text in the full-resolution footage and magnify it; the yellow tags mark preview stand-ins; green tags name the
+  LEAF scenario behind each claim.
 
 ## Logic proven vs feel unproven
 
