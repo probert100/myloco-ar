@@ -26,17 +26,6 @@ every frame). It re-parents the camera under a runtime rig and moves or turns th
 do to the tracked pose. A probe scenario confirmed this before the tests were written, and was then deleted. The same
 moves were also checked by hand with the `MovePreviewCamera` MCP tool (screenshots 03 and 04).
 
-## Who wrote what (honest version)
-
-| Part | Author |
-|---|---|
-| Idea, MyLoco product, the spec and review answers behind the brief | Robert |
-| `devpost/design-brief.md` | `plan-lens` skill (Devpost Learn pack), from Robert's answers |
-| First draft of all 14 Lens scripts (`lens-src/`, ~1,900 lines, see commit `1535833`) | A cloud Claude session, written without Lens Studio access and never compiled |
-| Project creation, scene, material, audio import, every fix below, 9 LEAF test files (~460 lines), preview set rework | This session (Claude Code + CLAD + Lens Studio MCP) |
-
-12 of the 14 cloud-written scripts were changed in this session (about 330 changed lines). `FriendFeed.ts` and
-`GeoMath.ts` are unchanged. `git diff 1535833 HEAD` shows every change.
 
 ## Toolchain actually used
 
